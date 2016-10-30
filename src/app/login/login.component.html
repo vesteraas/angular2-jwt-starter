@@ -1,0 +1,32 @@
+<md-card class="demo-card demo-basic">
+  <md-toolbar color="primary">{{title}}</md-toolbar>
+  <md-card-content>
+    <form novalidate>
+      <table>
+        <tr>
+          <td>
+            <md-input type="text" name="email" placeholder="Your email address" [(ngModel)]="model.email"
+                      #email="ngModel" required=""></md-input>
+            <md-input type="password" name="password" placeholder="Your password" [(ngModel)]="model.password"
+                      #password="ngModel" required=""></md-input>
+          </td>
+        </tr>
+        <tr *ngIf="newUser">
+          <td>
+            <md-input *ngIf="newUser" type="text" name="firstName" placeholder="Your first name" [(ngModel)]="model.firstName"
+                      #email="ngModel" required=""></md-input>
+            <md-input *ngIf="newUser" type="txt" name="lastName" placeholder="Your last name" [(ngModel)]="model.lastName"
+                      #password="ngModel" required=""></md-input>
+          </td>
+        </tr>
+      </table>
+      <div class="form-group">
+        <button *ngIf="!newUser" md-raised-button [disabled]="loading" (click)="login()">Login</button>
+        <button *ngIf="!newUser" md-raised-button (click)="showRegister()">New user</button>
+        <button *ngIf="newUser" md-raised-button (click)="register()">Register user</button>
+        <md-spinner *ngIf="loading"></md-spinner>
+      </div>
+      <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+    </form>
+  </md-card-content>
+</md-card>
