@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gorilla/mux"
 	"net/http"
+  "rest/handlers"
 )
 
 type Route struct {
@@ -32,18 +33,18 @@ var routes = Routes{
 		"Register",
 		"POST",
 		"/api/register",
-		Register,
+		handlers.Register,
 	},
 	Route{
 		"Authenticate",
 		"POST",
 		"/api/authenticate",
-		Authenticate,
+    handlers.Authenticate,
 	},
   Route{
     "GetUsers",
     "GET",
     "/api/users",
-    validate(GetUsers),
+    handlers.Validate(handlers.GetUsers),
   },
 }
