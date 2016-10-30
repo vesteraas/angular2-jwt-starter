@@ -1,4 +1,4 @@
-<md-card class="demo-card demo-basic">
+<md-card>
   <md-toolbar color="primary">{{title}}</md-toolbar>
   <md-card-content>
     <form novalidate>
@@ -23,10 +23,9 @@
       <div class="form-group">
         <button *ngIf="!newUser" md-raised-button [disabled]="loading" (click)="login()">Login</button>
         <button *ngIf="!newUser" md-raised-button (click)="showRegister()">New user</button>
-        <button *ngIf="newUser" md-raised-button (click)="register()">Register user</button>
-        <md-spinner *ngIf="loading"></md-spinner>
+        <button *ngIf="newUser" md-raised-button [disabled]="loading" (click)="register()">Register user</button>
       </div>
-      <div *ngIf="error" class="alert alert-danger">{{error}}</div>
     </form>
+    <md-card class="error-card" *ngIf="error"><span class="error">{{error}}</span></md-card>
   </md-card-content>
 </md-card>

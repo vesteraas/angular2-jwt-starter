@@ -26,17 +26,23 @@ export class LoginComponent implements OnInit {
   login() {
     this.loading = true;
     this.authenticationService.login(this.model.email, this.model.password)
-      .subscribe(result => {
-        if (result === true) {
+      .subscribe(result =>  {
+          if (result === true) {
           this.router.navigate(['/']);
         } else {
           this.error = 'Email or password is incorrect';
           this.loading = false;
         }
+      }, error => {
+        if (error.message) {
+          this.loading = false;
+          this.error = error.message;
+        }
       });
   }
 
   showRegister() {
+    this.error = null;
     this.newUser = true;
     this.title = 'Register new user';
   }
@@ -47,6 +53,11 @@ export class LoginComponent implements OnInit {
       .subscribe(result => {
         if (result === true) {
           this.router.navigate(['/']);
+        }
+      }, error => {
+        if (error.message) {
+          this.loading = false;
+          this.error = error.message;
         }
       });
   }

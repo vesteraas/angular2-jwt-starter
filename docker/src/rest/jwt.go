@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"net/http"
-	"backend/users"
+  "rest/users"
 	"time"
   "strings"
 )
@@ -39,7 +39,7 @@ func getToken(user users.User, w http.ResponseWriter, r *http.Request) (signedTo
 
 func validate(page http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-    authorizationHeader := r.Header.Get("Authorization");
+    authorizationHeader := r.Header.Get("Authorization")
 
     if authorizationHeader == "" || !strings.HasPrefix(authorizationHeader, "Bearer") {
       http.Error(w, "Not authorized", 401)

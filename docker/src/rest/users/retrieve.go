@@ -64,13 +64,13 @@ type UserData struct {
 func (rur RedisUserRetriever) RetrieveAll() ([]User, error) {
   users := []User{}
 
-  keys, err := rur.Client.Keys("user:*").Result();
+  keys, err := rur.Client.Keys("user:*").Result()
 
   if err != nil {
     return []User{}, err
   }
 
-  pipeline := rur.Client.Pipeline();
+  pipeline := rur.Client.Pipeline()
 
   var results = make([]*redis.SliceCmd, 0)
 
@@ -85,7 +85,7 @@ func (rur RedisUserRetriever) RetrieveAll() ([]User, error) {
   }
 
   for i, result := range results {
-    current := result.Val();
+    current := result.Val()
     isAdmin, err := strconv.ParseBool(current[0].(string))
 
     if err != nil {

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
-	"backend/users"
+  "rest/users"
 )
 
 type Message struct {
@@ -40,23 +40,25 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+  w.Header().Set("Content-Type", "application/json")
+
 	if userInfo.Email == "" {
-		http.Error(w, "Email parameter missing.", http.StatusInternalServerError)
-		return
+    sendMessage(w, Message{false, fmt.Sprint("Email parameter missing.")}, http.StatusInternalServerError)
+    return
 	}
 
 	if userInfo.Password == "" {
-		http.Error(w, "Password parameter missing.", http.StatusInternalServerError)
+    sendMessage(w, Message{false, fmt.Sprint("Password parameter missing.")}, http.StatusInternalServerError)
 		return
 	}
 
 	if userInfo.FirstName == "" {
-		http.Error(w, "First name parameter missing.", http.StatusInternalServerError)
+    sendMessage(w, Message{false, fmt.Sprint("First name parameter missing.")}, http.StatusInternalServerError)
 		return
 	}
 
 	if userInfo.LastName == "" {
-		http.Error(w, "Last name parameter missing.", http.StatusInternalServerError)
+    sendMessage(w, Message{false, fmt.Sprint("Last name parameter missing.")}, http.StatusInternalServerError)
 		return
 	}
 
@@ -70,7 +72,6 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-  w.Header().Set("Content-Type", "application/json")
 	if !exists {
 		up := users.RedisUserPersister{
 			Client: client,
@@ -114,7 +115,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
       panic(err)
     }
 	} else {
-		sendMessage(w, Message{false, fmt.Sprintf("A user with the email '%s' already exists.", userInfo.LastName)}, http.StatusInternalServerError)
+		sendMessage(w, Message{false, fmt.Sprintf("A user with the email '%s' already exists.", userInfo.Email)}, http.StatusInternalServerError)
 	}
 }
 
@@ -123,13 +124,15 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 
 	err := json.NewDecoder(r.Body).Decode(&userInfo)
 
+  w.Header().Set("Content-Type", "application/json")
+
 	if userInfo.Email == "" {
-		http.Error(w, "Email parameter missing.", http.StatusInternalServerError)
+    sendMessage(w, Message{false, fmt.Sprint("Email parameter missing.")}, http.StatusInternalServerError)
 		return
 	}
 
 	if userInfo.Password == "" {
-		http.Error(w, "Password parameter missing.", http.StatusInternalServerError)
+    sendMessage(w, Message{false, fmt.Sprint("Password parameter missing.")}, http.StatusInternalServerError)
 		return
 	}
 
@@ -143,7 +146,6 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	w.Header().Set("Content-Type", "application/json")
 	if exists {
 		ur := users.RedisUserRetriever{
 			Client: client,
@@ -158,12 +160,11 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 		err = bcrypt.CompareHashAndPassword([]byte(user.EncryptedPassword), []byte(userInfo.Password))
 
 		if err != nil {
-      fmt.Printf(err.Error());
 			http.Error(w, "Unauthorized.", http.StatusUnauthorized)
 			return
 		}
 
-    token, err := getToken(user, w, r);
+    token, err := getToken(user, w, r)
 
     if err != nil {
       panic(err)

@@ -5,16 +5,15 @@
   "author" : "wvesteraas@gmail.com",
   "angular-cli": {},
   "scripts": {
-    "start": "ng serve --proxy-config proxy.conf.json",
-    "lint": "tslint \"src/**/*.ts\"",
-    "test": "ng test",
-    "pree2e": "webdriver-manager update",
-    "e2e": "protractor",
-    "prestart-backend": "docker-compose -f app.yml down",
-    "start-backend": "docker-compose -f app.yml up -d",
-    "stop-backend": "docker-compose -f app.yml down"
+    "prestart-backend": "docker-compose -f servers.yml down",
+    "start-backend": "docker-compose -f servers.yml up -d",
+    "stop-backend": "docker-compose -f servers.yml down",
+    "build-backend": "docker-compose -f servers.yml build",
+    "restart-rest":  "docker-compose -f servers.yml restart backend",
+    "restart-redis":  "docker-compose -f servers.yml restart redis",
+    "start-frontend": "ng serve --proxy-config proxy.conf.json"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/common": "~2.1.0",
     "@angular/compiler": "~2.1.0",

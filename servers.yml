@@ -1,10 +1,11 @@
 version: "2"
 services:
-  backend:
-    build: ./docker/backend/src/backend
+  rest:
+    build: ./docker/src/rest
     ports:
       - "8080:8080"
     links:
       - redis
   redis:
     image: redis
+    command: redis-server --appendonly yes
