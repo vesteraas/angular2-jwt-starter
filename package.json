@@ -8,8 +8,8 @@
     "prestart-backend": "docker-compose -f servers.yml down",
     "start-backend": "docker-compose -f servers.yml up -d",
     "stop-backend": "docker-compose -f servers.yml down",
-    "build-backend": "docker-compose -f servers.yml build",
-    "restart-rest":  "docker-compose -f servers.yml restart backend",
+    "build-backend": "docker-compose -f servers.yml build --force-rm --no-cache",
+    "restart-rest":  "docker-compose -f servers.yml restart rest",
     "restart-redis":  "docker-compose -f servers.yml restart redis",
     "start-frontend": "ng serve --proxy-config proxy.conf.json"
   },

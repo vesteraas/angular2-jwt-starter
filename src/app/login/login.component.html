@@ -26,6 +26,6 @@
         <button *ngIf="newUser" md-raised-button [disabled]="loading" (click)="register()">Register user</button>
       </div>
     </form>
-    <md-card class="error-card" *ngIf="error"><span class="error">{{error}}</span></md-card>
+    <div class="error">{{error}}</div>
   </md-card-content>
 </md-card>

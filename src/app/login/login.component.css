@@ -1,7 +1,4 @@
 .error {
+  padding-top: 1em;
   color: red
-}
-
-.error-card {
-  margin-top: 10px;
 }

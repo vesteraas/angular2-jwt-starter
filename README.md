@@ -13,7 +13,7 @@ First, you need to start the Docker containers, by typing `npm run start-backend
 
 After starting the containers, start the Angular 2 application, by typing `npm run start-frontend`.  Then point your browser to `http://127.0.0.1:4200`.
 
-## Developing
+## Developing 
 During development, you may need to restart the containers individually.  If you modify the REST server code, you need to rebuild its Docker image for the REST server, and restart it. This can be done by typing `npm run restart-rest`.  If you need to restart Redis (which will get rid of all the stored data, btw), type `npm run restart-redis`.
 
 ## Stopping the containers

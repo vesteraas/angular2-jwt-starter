@@ -160,7 +160,7 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 		err = bcrypt.CompareHashAndPassword([]byte(user.EncryptedPassword), []byte(userInfo.Password))
 
 		if err != nil {
-			http.Error(w, "Unauthorized.", http.StatusUnauthorized)
+      sendMessage(w, Message{false, fmt.Sprint("You've entered the wrong password!")}, http.StatusInternalServerError)
 			return
 		}
 
